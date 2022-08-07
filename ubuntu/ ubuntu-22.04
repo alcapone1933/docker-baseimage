@@ -1,0 +1,6 @@
+FROM ubuntu:22.04
+# linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x
+LABEL maintainer="alcapone1933 alcapone1933@cosanostra-cloud.de"
+ENV TZ=Europe/Berlin
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN apt-get update -y && apt-get upgrade -y
