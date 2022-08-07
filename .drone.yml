@@ -7,7 +7,7 @@ steps:
     image: thegeeklab/drone-docker-buildx
     privileged: true
     settings:
-	  dockerfile: debian/debian-buster
+      dockerfile: debian/debian-buster
       platforms: linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x
       repo: alcapone1933/debian
       tags: buster
@@ -16,7 +16,7 @@ steps:
     image: thegeeklab/drone-docker-buildx
     privileged: true
     settings:
-	  dockerfile: debian/debian-bullseye
+      dockerfile: debian/debian-bullseye
       platforms: linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x
       repo: alcapone1933/debian
       tags: bullseye
@@ -25,7 +25,7 @@ steps:
     image: thegeeklab/drone-docker-buildx
     privileged: true
     settings:
-	  dockerfile: debian/debian-latest
+      dockerfile: debian/debian-latest
       platforms: linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x
       repo: alcapone1933/debian
       tags: latest
@@ -34,7 +34,7 @@ steps:
     image: thegeeklab/drone-docker-buildx
     privileged: true
     settings:
-	  dockerfile: ubuntu/ubuntu-20.04
+      dockerfile: ubuntu/ubuntu-20.04
       platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x
       repo: alcapone1933/ubuntu
       tags: 20.04
@@ -43,7 +43,7 @@ steps:
     image: thegeeklab/drone-docker-buildx
     privileged: true
     settings:
-	  dockerfile: ubuntu/ubuntu-21.04
+      dockerfile: ubuntu/ubuntu-21.04
       platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x
       repo: alcapone1933/ubuntu
       tags: 21.04
@@ -52,7 +52,7 @@ steps:
     image: thegeeklab/drone-docker-buildx
     privileged: true
     settings:
-	  dockerfile: ubuntu/ubuntu-22.04
+      dockerfile: ubuntu/ubuntu-22.04
       platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x
       repo: alcapone1933/ubuntu
       tags: 22.04
@@ -61,12 +61,12 @@ steps:
     image: thegeeklab/drone-docker-buildx
     privileged: true
     settings:
-	  dockerfile: ubuntu/ubuntu-latest
+      dockerfile: ubuntu/ubuntu-latest
       platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x
       repo: alcapone1933/ubuntu
       tags: latest
       dry_run: true	  
-	  
+
 trigger:
   branch:
   - master
@@ -87,7 +87,7 @@ steps:
         from_secret: DOCKER_USER
       password:
         from_secret: DOCKER_PASS
-	  dockerfile: debian/debian-buster
+      dockerfile: debian/debian-buster
       platforms: linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x
       repo: alcapone1933/debian
       tags: buster
@@ -99,7 +99,7 @@ steps:
         from_secret: DOCKER_USER
       password:
         from_secret: DOCKER_PASS
-	  dockerfile: debian/debian-bullseye
+      dockerfile: debian/debian-bullseye
       platforms: linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x
       repo: alcapone1933/debian
       tags: bullseye
@@ -111,7 +111,7 @@ steps:
         from_secret: DOCKER_USER
       password:
         from_secret: DOCKER_PASS
-	  dockerfile: debian/debian-latest
+      dockerfile: debian/debian-latest
       platforms: linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x
       repo: alcapone1933/debian
       tags: latest
@@ -123,7 +123,7 @@ steps:
         from_secret: DOCKER_USER
       password:
         from_secret: DOCKER_PASS
-	  dockerfile: ubuntu/ubuntu-20.04
+      dockerfile: ubuntu/ubuntu-20.04
       platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x
       repo: alcapone1933/ubuntu
       tags: 20.04
@@ -135,7 +135,7 @@ steps:
         from_secret: DOCKER_USER
       password:
         from_secret: DOCKER_PASS
-	  dockerfile: ubuntu/ubuntu-21.04
+      dockerfile: ubuntu/ubuntu-21.04
       platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x
       repo: alcapone1933/ubuntu
       tags: 21.04
@@ -147,7 +147,7 @@ steps:
         from_secret: DOCKER_USER
       password:
         from_secret: DOCKER_PASS
-	  dockerfile: ubuntu/ubuntu-22.04
+      dockerfile: ubuntu/ubuntu-22.04
       platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x
       repo: alcapone1933/ubuntu
       tags: 22.04
@@ -159,7 +159,7 @@ steps:
         from_secret: DOCKER_USER
       password:
         from_secret: DOCKER_PASS
-	  dockerfile: ubuntu/ubuntu-latest
+      dockerfile: ubuntu/ubuntu-latest
       platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x
       repo: alcapone1933/ubuntu
       tags: latest
