@@ -72,9 +72,9 @@ trigger:
   - master
   event:
   - custom
-  - cron
-  cron:
-  - weekly
+  # - cron
+  # cron:
+  # - weekly
 
 ---
 kind: pipeline
@@ -172,9 +172,9 @@ trigger:
   - master
   event:
   - custom
-  - cron
-  cron:
-  - weekly
+  # - cron
+  # cron:
+  # - weekly
 
 depends_on:
   - BUILD-TEST
