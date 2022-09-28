@@ -71,11 +71,12 @@ trigger:
   branch:
   - master
   event:
+  - push
+  - pull_request
+  - cron
   - custom
-  # - cron
-  # cron:
-  # - weekly
-
+  cron:
+  - weekly
 ---
 kind: pipeline
 type: docker
@@ -171,10 +172,12 @@ trigger:
   branch:
   - master
   event:
+  - push
+  - pull_request
+  - cron
   - custom
-  # - cron
-  # cron:
-  # - weekly
+  cron:
+  - weekly
 
 depends_on:
   - BUILD-TEST
