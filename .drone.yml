@@ -39,15 +39,6 @@ steps:
       repo: alcapone1933/ubuntu
       tags: 20.04
       dry_run: true
-#  - name: Build UBUNTU 21.04
-#    image: thegeeklab/drone-docker-buildx
-#    privileged: true
-#    settings:
-#      dockerfile: ubuntu/ubuntu-21-04
-#      platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x
-#      repo: alcapone1933/ubuntu
-#      tags: 21.04
-#      dry_run: true
   - name: Build UBUNTU 22.04
     image: thegeeklab/drone-docker-buildx
     privileged: true
@@ -71,8 +62,8 @@ trigger:
   branch:
   - master
   event:
-  - push
-  - pull_request
+  # - push
+  # - pull_request
   # - cron
   - custom
   # cron:
@@ -131,18 +122,6 @@ steps:
       platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x
       repo: alcapone1933/ubuntu
       tags: 20.04
-#  - name: Build UBUNTU 21.04
-#    image: thegeeklab/drone-docker-buildx
-#    privileged: true
-#    settings:
-#      username: 
-#        from_secret: DOCKER_USER
-#      password:
-#        from_secret: DOCKER_PASS
-#      dockerfile: ubuntu/ubuntu-21-04
-#      platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x
-#      repo: alcapone1933/ubuntu
-#      tags: 21.04
   - name: Build UBUNTU 22.04
     image: thegeeklab/drone-docker-buildx
     privileged: true
@@ -172,8 +151,8 @@ trigger:
   branch:
   - master
   event:
-  - push
-  - pull_request
+  # - push
+  # - pull_request
   # - cron
   - custom
   # cron:
