@@ -73,10 +73,10 @@ trigger:
   event:
   - push
   - pull_request
-  - cron
+  # - cron
   - custom
-  cron:
-  - weekly
+  # cron:
+  # - weekly
 ---
 kind: pipeline
 type: docker
@@ -174,10 +174,10 @@ trigger:
   event:
   - push
   - pull_request
-  - cron
+  # - cron
   - custom
-  cron:
-  - weekly
+  # cron:
+  # - weekly
 
 depends_on:
   - BUILD-TEST
