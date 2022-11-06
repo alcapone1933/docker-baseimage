@@ -3,8 +3,8 @@ FROM debian:latest
 LABEL maintainer="alcapone1933 alcapone1933@cosanostra-cloud.de"
 ENV TZ=Europe/Berlin
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-RUN echo "deb http://deb.debian.org/debian bullseye contrib non-free" >> /etc/apt/sources.list && \
-    apt-get update && apt-get -y install wget locales procps && \
+# RUN echo "deb http://deb.debian.org/debian bullseye contrib non-free" >> /etc/apt/sources.list && \
+RUN apt-get update && apt-get -y install wget locales procps && \
     touch /etc/locale.gen && \
     echo "de_DE.UTF-8 UTF-8" >> /etc/locale.gen && \
     locale-gen && \
