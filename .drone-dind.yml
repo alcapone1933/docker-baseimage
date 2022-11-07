@@ -1,0 +1,95 @@
+---
+kind: pipeline
+type: docker
+name: BUILD-TEST
+
+steps:
+  - name: Build Multi-arch Test
+    image: alcapone1933/docker-dind:latest
+    volumes:
+      - name: dockersock
+        path: /var/run
+    commands:
+      - sleep 5
+      - docker buildx create --name test --driver-opt network=host,image=crazymax/buildkit:latest --bootstrap --use
+      - docker buildx ls
+      - docker buildx inspect test
+      - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x -t alcapone1933/debian:bullseye -f debian/debian-bullseye .
+      - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x -t alcapone1933/debian:latest -f debian/debian-latest .
+      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:20.04 -f ubuntu/ubuntu-20-04 .
+      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:22.04 -f ubuntu/ubuntu-22-04 .
+      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -talcapone1933/ubuntu:latest -f ubuntu/ubuntu-latest .
+      - docker buildx rm test
+      - docker buildx ls
+services:
+  - name: docker
+    image: alcapone1933/docker-dind:latest
+    privileged: true
+    volumes:
+      - name: dockersock
+        path: /var/run
+
+volumes:
+  - name: dockersock
+    temp: {}
+
+trigger:
+  branch:
+  - master
+  event:
+  # - push
+  # - pull_request
+  - custom
+
+---
+kind: pipeline
+type: docker
+name: BUILD-Dockerhub
+
+steps:
+  - name: Build Multi-arch
+    image: alcapone1933/docker-dind:latest
+    volumes:
+      - name: dockersock
+        path: /var/run
+    environment:    
+      DOCKER_USER:
+        from_secret: DOCKER_USER
+      DOCKER_PASS:
+        from_secret: DOCKER_PASS
+    commands:
+      - sleep 5
+      - echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
+      - docker buildx create --name build --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
+      - docker buildx ls
+      - docker buildx inspect build
+      - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x -t alcapone1933/debian:bullseye -f debian/debian-bullseye --push .
+      - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x -t alcapone1933/debian:latest -f debian/debian-latest --push .
+      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:20.04 -f ubuntu/ubuntu-20-04 --push .
+      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:22.04 -f ubuntu/ubuntu-22-04 --push .
+      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -talcapone1933/ubuntu:latest -f ubuntu/ubuntu-latest --push .
+      - docker buildx rm build
+      - docker buildx ls
+
+services:
+  - name: docker
+    image: alcapone1933/docker-dind:latest
+    privileged: true
+    volumes:
+      - name: dockersock
+        path: /var/run
+
+volumes:
+  - name: dockersock
+    temp: {}
+
+trigger:
+  branch:
+  - master
+  event:
+  # - push
+  # - pull_request
+  - custom
+
+depends_on:
+  - BUILD-TEST
