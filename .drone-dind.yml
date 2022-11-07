@@ -11,7 +11,7 @@ steps:
         path: /var/run
     commands:
       - sleep 5
-      - docker buildx create --name debian-buster --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
+      - docker buildx create --name debian-buster --platform linux/386,linux/amd64,linux/arm/v7,linux/arm64/v8 --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx ls
       - docker buildx inspect debian-buster
       - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v7,linux/arm64/v8 -t alcapone1933/debian:buster -f debian/debian-buster .
@@ -24,7 +24,7 @@ steps:
         path: /var/run
     commands:
       - sleep 5
-      - docker buildx create --name debian-bullseye --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
+      - docker buildx create --name debian-bullseye --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx ls
       - docker buildx inspect debian-bullseye
       - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x -t alcapone1933/debian:bullseye -f debian/debian-bullseye .
@@ -37,7 +37,7 @@ steps:
         path: /var/run
     commands:
       - sleep 5
-      - docker buildx create --name debian-latest --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
+      - docker buildx create --name debian-latest --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx ls
       - docker buildx inspect debian-latest
       - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x -t alcapone1933/debian:latest -f debian/debian-latest .
@@ -50,7 +50,7 @@ steps:
         path: /var/run
     commands:
       - sleep 5
-      - docker buildx create --name ubuntu-20-04 --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
+      - docker buildx create --name ubuntu-20-04 --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx ls
       - docker buildx inspect ubuntu-20-04
       - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:20.04 -f ubuntu/ubuntu-20-04 .
@@ -63,7 +63,7 @@ steps:
         path: /var/run
     commands:
       - sleep 5
-      - docker buildx create --name ubuntu-22-04 --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
+      - docker buildx create --name ubuntu-22-04 --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx ls
       - docker buildx inspect ubuntu-22-04
       - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:22.04 -f ubuntu/ubuntu-22-04 .
@@ -76,7 +76,7 @@ steps:
         path: /var/run
     commands:
       - sleep 5
-      - docker buildx create --name ubuntu-latest --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
+      - docker buildx create --name ubuntu-latest --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx ls
       - docker buildx inspect ubuntu-latest
       - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:latest -f ubuntu/ubuntu-latest .
@@ -122,7 +122,7 @@ steps:
     commands:
       - sleep 5
       - echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
-      - docker buildx create --name debian-buster --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
+      - docker buildx create --name debian-buster --platform linux/386,linux/amd64,linux/arm/v7,linux/arm64/v8 --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx ls
       - docker buildx inspect debian-buster
       - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v7,linux/arm64/v8 -t alcapone1933/debian:buster -f debian/debian-buster --push .
@@ -141,7 +141,7 @@ steps:
     commands:
       - sleep 5
       - echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
-      - docker buildx create --name debian-bullseye --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
+      - docker buildx create --name debian-bullseye --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx ls
       - docker buildx inspect debian-bullseye
       - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x -t alcapone1933/debian:bullseye -f debian/debian-bullseye --push .
@@ -160,7 +160,7 @@ steps:
     commands:
       - sleep 5
       - echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
-      - docker buildx create --name debian-latest --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
+      - docker buildx create --name debian-latest --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx ls
       - docker buildx inspect debian-latest
       - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x -t alcapone1933/debian:latest -f debian/debian-latest --push .
@@ -179,7 +179,7 @@ steps:
     commands:
       - sleep 5
       - echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
-      - docker buildx create --name ubuntu-20-04 --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
+      - docker buildx create --name ubuntu-20-04 --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx ls
       - docker buildx inspect ubuntu-20-04
       - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:20.04 -f ubuntu/ubuntu-20-04 --push .
@@ -198,7 +198,7 @@ steps:
     commands:
       - sleep 5
       - echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
-      - docker buildx create --name ubuntu-22-04 --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
+      - docker buildx create --name ubuntu-22-04 --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx ls
       - docker buildx inspect ubuntu-22-04
       - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:22.04 -f ubuntu/ubuntu-22-04 --push .
@@ -217,7 +217,7 @@ steps:
     commands:
       - sleep 5
       - echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
-      - docker buildx create --name ubuntu-latest --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
+      - docker buildx create --name ubuntu-latest --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx ls
       - docker buildx inspect ubuntu-latest
       - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:latest -f ubuntu/ubuntu-latest --push .
