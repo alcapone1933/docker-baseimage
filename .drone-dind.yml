@@ -11,7 +11,7 @@ steps:
         path: /var/run
     commands:
       - sleep 5
-      - docker buildx create --name test --driver-opt network=host,image=crazymax/buildkit:latest --bootstrap --use
+      - docker buildx create --name test --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx ls
       - docker buildx inspect test
       - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x -t alcapone1933/debian:bullseye -f debian/debian-bullseye .
