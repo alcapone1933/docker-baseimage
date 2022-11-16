@@ -6,5 +6,6 @@ LABEL maintainer="alcapone1933 <alcapone1933@cosanostra-cloud.de>" \
 ENV TZ=Europe/Berlin
 
 RUN apk update && apk upgrade && \
+    apk install tzdata && \
     rm -rf /var/cache/apk/* && \ 
     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
