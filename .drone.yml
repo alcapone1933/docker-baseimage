@@ -56,7 +56,27 @@ steps:
       platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x
       repo: alcapone1933/ubuntu
       tags: latest
-      dry_run: true	  
+      dry_run: true
+  - name: Build ALPINE VERSION
+    image: alcapone1933/drone:docker-buildx
+    privileged: true
+    settings:
+      dockerfile: alpine/alpine-latest
+      platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
+      repo: alcapone1933/alpine
+      # tags: latest
+      auto_tag: true
+      auto_tag_suffix: v3.16
+      dry_run: true
+  - name: Build ALPINE LATEST
+    image: alcapone1933/drone:docker-buildx
+    privileged: true
+    settings:
+      dockerfile: alpine/alpine-latest
+      platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
+      repo: alcapone1933/alpine
+      tags: latest
+      dry_run: true
 
 trigger:
   branch:
@@ -145,6 +165,32 @@ steps:
       dockerfile: ubuntu/ubuntu-latest
       platforms: linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x
       repo: alcapone1933/ubuntu
+      tags: latest
+  - name: Build ALPINE VERSION
+    image: alcapone1933/drone:docker-buildx
+    privileged: true
+    settings:
+      username: 
+        from_secret: DOCKER_USER
+      password:
+        from_secret: DOCKER_PASS
+      dockerfile: alpine/alpine-latest
+      platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
+      repo: alcapone1933/alpine
+      # tags: latest
+      auto_tag: true
+      auto_tag_suffix: v3.16
+  - name: Build ALPINE LATEST
+    image: alcapone1933/drone:docker-buildx
+    privileged: true
+    settings:
+      username: 
+        from_secret: DOCKER_USER
+      password:
+        from_secret: DOCKER_PASS
+      dockerfile: alpine/alpine-latest
+      platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
+      repo: alcapone1933/alpine
       tags: latest
 
 trigger:
