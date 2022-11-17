@@ -103,6 +103,14 @@ services:
     volumes:
       - name: dockersock
         path: /var/run
+    environment:
+      DOCKER_USER:
+        from_secret: DOCKER_USER
+      DOCKER_PASS:
+        from_secret: DOCKER_PASS
+    commands:
+      - sleep 5
+      - echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
 
 volumes:
   - name: dockersock
