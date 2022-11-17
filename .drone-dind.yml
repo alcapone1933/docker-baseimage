@@ -111,7 +111,7 @@ services:
     commands:
       - sleep 5
       - echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
-
+      - wait $!
 volumes:
   - name: dockersock
     temp: {}
