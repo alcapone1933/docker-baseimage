@@ -28,8 +28,14 @@ steps:
     volumes:
       - name: dockersock
         path: /var/run
+    environment:
+      DOCKER_USER:
+        from_secret: DOCKER_USER
+      DOCKER_PASS:
+        from_secret: DOCKER_PASS
     commands:
       - sleep 5
+      - echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
       - docker buildx create --name debian-bullseye --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx ls
       - docker buildx inspect debian-bullseye
@@ -41,8 +47,14 @@ steps:
     volumes:
       - name: dockersock
         path: /var/run
+    environment:
+      DOCKER_USER:
+        from_secret: DOCKER_USER
+      DOCKER_PASS:
+        from_secret: DOCKER_PASS
     commands:
       - sleep 5
+      - echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
       - docker buildx create --name debian-latest --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx ls
       - docker buildx inspect debian-latest
@@ -54,8 +66,14 @@ steps:
     volumes:
       - name: dockersock
         path: /var/run
+    environment:
+      DOCKER_USER:
+        from_secret: DOCKER_USER
+      DOCKER_PASS:
+        from_secret: DOCKER_PASS
     commands:
       - sleep 5
+      - echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
       - docker buildx create --name ubuntu-20-04 --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx ls
       - docker buildx inspect ubuntu-20-04
@@ -67,8 +85,14 @@ steps:
     volumes:
       - name: dockersock
         path: /var/run
+    environment:
+      DOCKER_USER:
+        from_secret: DOCKER_USER
+      DOCKER_PASS:
+        from_secret: DOCKER_PASS
     commands:
       - sleep 5
+      - echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
       - docker buildx create --name ubuntu-22-04 --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx ls
       - docker buildx inspect ubuntu-22-04
@@ -80,8 +104,14 @@ steps:
     volumes:
       - name: dockersock
         path: /var/run
+    environment:
+      DOCKER_USER:
+        from_secret: DOCKER_USER
+      DOCKER_PASS:
+        from_secret: DOCKER_PASS
     commands:
       - sleep 5
+      - echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
       - docker buildx create --name ubuntu-latest --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx ls
       - docker buildx inspect ubuntu-latest
@@ -93,8 +123,14 @@ steps:
     volumes:
       - name: dockersock
         path: /var/run
+    environment:
+      DOCKER_USER:
+        from_secret: DOCKER_USER
+      DOCKER_PASS:
+        from_secret: DOCKER_PASS
     commands:
       - sleep 5
+      - echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
       - docker buildx create --name alpine-latest --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx ls
       - docker buildx inspect alpine-latest
