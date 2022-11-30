@@ -15,7 +15,7 @@ steps:
       DOCKER_PASS:
         from_secret: DOCKER_PASS
     commands:
-      - sleep 5
+      - sleep 10
       - echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
       - docker buildx create --name debian-buster --platform linux/386,linux/amd64,linux/arm/v7,linux/arm64/v8 --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx ls
@@ -175,7 +175,7 @@ steps:
       DOCKER_PASS:
         from_secret: DOCKER_PASS
     commands:
-      - sleep 5
+      - sleep 10
       - echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
       - docker buildx create --name debian-buster --platform linux/386,linux/amd64,linux/arm/v7,linux/arm64/v8 --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx ls
