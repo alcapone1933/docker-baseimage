@@ -4,32 +4,50 @@ LABEL maintainer="alcapone1933 <alcapone1933@cosanostra-cloud.de>" \
       org.opencontainers.image.authors="alcapone1933 <alcapone1933@cosanostra-cloud.de>"
 
 ENV TZ=Europe/Berlin
-
+ENV SPEEDTEST_VERSION=1.2.0
 WORKDIR /root
 
-RUN apk add --update --no-cache bash sudo byobu tini tzdata curl wget git tig nano bind-tools gnupg jq python3 py3-pip \
+RUN apk add --update --no-cache bash sudo byobu tini tzdata curl wget tar git tig nano bind-tools gnupg jq python3 py3-pip \
     netcat-openbsd iputils nmap net-tools openssh-client openssl iperf iproute2 procps vnstat mtr tcptraceroute tcpdump make \
-    speedtest-cli docker ca-certificates libc6-compat hstr ncurses bash-completion && \
+    docker ca-certificates libc6-compat hstr ncurses bash-completion && \
     git clone --depth=1 https://github.com/Bash-it/bash-it.git /root/.bash_it && /root/.bash_it/install.sh --silent && \
     rm -rf /var/cache/apk/* && \
     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-RUN set -eux && \
-    COMPOSE_VERSION=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep 'tag_name' | cut -d\" -f4) && \
+
+RUN apkArch="$(apk --print-arch)" && \
+    case "$apkArch" in \
+        'x86_64') \
+            _arch="x86_64" \
+            ;; \
+        'armv7') \
+            _arch="armhf" \
+            ;; \
+        'aarch64') \
+            _arch="aarch64" \
+            ;; \
+        *) \
+            echo >&2 "error: unsupported 'speedtest-cli' architecture ($apkArch)"; exit 1 \
+            ;; \
+    esac && \
+    cd /tmp && \
+    curl -sSL https://install.speedtest.net/app/cli/ookla-speedtest-${SPEEDTEST_VERSION}-linux-${_arch}.tgz | tar xvz && \
+    mv /tmp/speedtest /usr/local/bin/ && rm -rf /tmp/speedtest.*
+
+RUN COMPOSE_VERSION=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep 'tag_name' | cut -d\" -f4) && \
     apkArch="$(apk --print-arch)" && \
     case "$apkArch" in \
         'x86_64') \
-            url="https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-linux-x86_64"; \
-            ;; \
-        'armhf') \
-            url="https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-linux-armv6"; \
+            url="https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-linux-x86_64" \
             ;; \
         'armv7') \
-            url="https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-linux-armv7"; \
+            url="https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-linux-armv7" \
             ;; \
         'aarch64') \
-            url="https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-linux-aarch64"; \
+            url="https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-linux-aarch64" \
             ;; \
-        *) echo >&2 "error: unsupported 'docker-compose' architecture ($apkArch)"; exit 1 ;; \
+        *) \
+            echo >&2 "error: unsupported 'docker-compose' architecture ($apkArch)"; exit 1 \
+            ;; \
     esac && \
     echo "$url = $(apk --print-arch)" && \
     sh -c "curl -L $url > /usr/local/bin/docker-compose" && chmod +x /usr/local/bin/docker-compose && \
@@ -37,10 +55,12 @@ RUN set -eux && \
     sed -i "s/export GIT_HOSTING='git@git.domain.com'/# export GIT_HOSTING='git@git.domain.com'/g" /root/.bashrc && \
     sed -i "s/export IRC_CLIENT='irssi'/# export IRC_CLIENT='irssi'/g" /root/.bashrc && \
     sed -i "s/export TODO=/# export TODO/g" /root/.bashrc && \
-    sed -i "s/#export SHORT_HOSTNAME=/export SHORT_HOSTNAME=/g" /root/.bashrc
+    sed -i "s/#export SHORT_HOSTNAME=/export SHORT_HOSTNAME=/g" /root/.bashrc && \
+    echo "alias speedtest-cli='/usr/local/bin/speedtest --accept-license --accept-gdpr'" >> /root/.bashrc
 
 COPY --from=alcapone1933/shoutrrr:latest /usr/local/bin/shoutrrr /usr/local/bin/shoutrrr
-COPY --from=alcapone1933/ctop /ctop /usr/local/bin/ctop
+COPY --from=alcapone1933/ctop:latest /ctop /usr/local/bin/ctop
+COPY --from=alcapone1933/bashc:latest /usr/local/bin/bashc /usr/local/bin/bashc
 
 ENTRYPOINT ["/sbin/tini", "--"]
 CMD ["/bin/bash"]
