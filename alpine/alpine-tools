@@ -8,7 +8,8 @@ ENV TZ=Europe/Berlin
 WORKDIR /root
 
 RUN apk add --update --no-cache bash sudo byobu tini tzdata curl wget git tig nano bind-tools gnupg jq python3 py3-pip \
-    netcat-openbsd iputils nmap net-tools openssh-client openssl iperf iproute2 procps vnstat mtr tcptraceroute tcpdump speedtest-cli docker ca-certificates libc6-compat hstr ncurses bash-completion && \
+    netcat-openbsd iputils nmap net-tools openssh-client openssl iperf iproute2 procps vnstat mtr tcptraceroute tcpdump \
+    speedtest-cli docker ca-certificates libc6-compat hstr ncurses bash-completion && \
     git clone --depth=1 https://github.com/Bash-it/bash-it.git /root/.bash_it && /root/.bash_it/install.sh --silent && \
     rm -rf /var/cache/apk/* && \
     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
@@ -16,19 +17,19 @@ RUN set -eux && \
     COMPOSE_VERSION=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep 'tag_name' | cut -d\" -f4) && \
     apkArch="$(apk --print-arch)" && \
     case "$apkArch" in \
-		'x86_64') \
-			url='https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-linux-x86_64'; \
-			;; \
-		'armhf') \
-			url='https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-linux-armv6'; \
-			;; \
-		'armv7') \
-			url='https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-linux-armv7'; \
-			;; \
-		'aarch64') \
-			url='https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-linux-aarch64'; \
-			;; \
-		*) echo >&2 "error: unsupported 'docker-compose' architecture ($apkArch)"; exit 1 ;; \
+        'x86_64') \
+            url='https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-linux-x86_64'; \
+            ;; \
+        'armhf') \
+            url='https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-linux-armv6'; \
+            ;; \
+        'armv7') \
+            url='https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-linux-armv7'; \
+            ;; \
+        'aarch64') \
+            url='https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-linux-aarch64'; \
+            ;; \
+        *) echo >&2 "error: unsupported 'docker-compose' architecture ($apkArch)"; exit 1 ;; \
     esac && \
     echo "$url = $(apk --print-arch)" && \
     sh -c "curl -L $url > /usr/local/bin/docker-compose" && chmod +x /usr/local/bin/docker-compose && \
@@ -41,3 +42,4 @@ RUN set -eux && \
 COPY --from=alcapone1933/shoutrrr:latest /usr/local/bin/shoutrrr /usr/local/bin/shoutrrr
 
 ENTRYPOINT ["/sbin/tini", "--", "/bin/bash"]
+
