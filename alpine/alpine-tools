@@ -1,0 +1,25 @@
+FROM alcapone1933/alpine:latest
+LABEL maintainer="alcapone1933 <alcapone1933@cosanostra-cloud.de>" \
+      org.opencontainers.image.created="$(date +%Y-%m-%d\ %H:%M)" \
+      org.opencontainers.image.authors="alcapone1933 <alcapone1933@cosanostra-cloud.de>"
+
+ENV TZ=Europe/Berlin
+
+WORKDIR /root
+
+RUN apk add --update --no-cache bash sudo byobu tini tzdata curl wget git tig nano bind-tools gnupg jq python3 py3-pip \
+    netcat-openbsd iputils nmap net-tools openssh-client openssl iperf iproute2 procps vnstat mtr tcptraceroute tcpdump speedtest-cli docker ca-certificates libc6-compat hstr ncurses bash-completion && \
+    wget -q -O - https://raw.githubusercontent.com/alcapone1933/shell-scripts/master/install/docker-compose-install.sh | sudo bash && \
+    git clone --depth=1 https://github.com/Bash-it/bash-it.git /root/.bash_it && /root/.bash_it/install.sh --silent && \
+    rm -rf /var/cache/apk/* && \
+    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+RUN sed -i "s/export BASH_IT_THEME='bobby'/export BASH_IT_THEME='zork'/g" /root/.bashrc && \
+    sed -i "s/export GIT_HOSTING='git@git.domain.com'/# export GIT_HOSTING='git@git.domain.com'/g" /root/.bashrc && \
+    sed -i "s/export IRC_CLIENT='irssi'/# export IRC_CLIENT='irssi'/g" /root/.bashrc && \
+    sed -i "s/export TODO=/# export TODO/g" /root/.bashrc && \
+    sed -i "s/#export SHORT_HOSTNAME=/export SHORT_HOSTNAME=/g" /root/.bashrc
+
+COPY --from=alcapone1933/shoutrrr:latest /usr/local/bin/shoutrrr /usr/local/bin/shoutrrr
+
+ENTRYPOINT ["/sbin/tini", "--", "/bin/bash"]
