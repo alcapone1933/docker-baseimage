@@ -40,6 +40,6 @@ RUN set -eux && \
     sed -i "s/#export SHORT_HOSTNAME=/export SHORT_HOSTNAME=/g" /root/.bashrc
 
 COPY --from=alcapone1933/shoutrrr:latest /usr/local/bin/shoutrrr /usr/local/bin/shoutrrr
+COPY --from=alcapone1933/ctop /ctop /usr/local/bin/ctop
 
 ENTRYPOINT ["/sbin/tini", "--", "/bin/bash"]
-
