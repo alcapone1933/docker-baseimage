@@ -8,7 +8,7 @@ ENV SPEEDTEST_VERSION=1.2.0
 WORKDIR /root
 
 RUN apk add --update --no-cache bash sudo byobu tini tzdata curl wget tar git tig nano bind-tools gnupg jq python3 py3-pip \
-    netcat-openbsd iputils nmap net-tools openssh-client openssl iperf iproute2 procps vnstat mtr tcptraceroute tcpdump make \
+    netcat-openbsd iputils nmap net-tools openssh-client openssl iperf iproute2 procps vnstat mtr tcptraceroute tcpdump make figlet \
     docker ca-certificates libc6-compat hstr ncurses bash-completion && \
     git clone --depth=1 https://github.com/Bash-it/bash-it.git /root/.bash_it && /root/.bash_it/install.sh --silent && \
     rm -rf /var/cache/apk/* && \
@@ -56,7 +56,10 @@ RUN COMPOSE_VERSION=$(curl -s https://api.github.com/repos/docker/compose/releas
     sed -i "s/export IRC_CLIENT='irssi'/# export IRC_CLIENT='irssi'/g" /root/.bashrc && \
     sed -i "s/export TODO=/# export TODO/g" /root/.bashrc && \
     sed -i "s/#export SHORT_HOSTNAME=/export SHORT_HOSTNAME=/g" /root/.bashrc && \
-    echo "alias speedtest-cli='/usr/local/bin/speedtest --accept-license --accept-gdpr'" >> /root/.bashrc
+    echo "alias speedtest-cli='/usr/local/bin/speedtest --accept-license --accept-gdpr'" >> /root/.bashrc && \
+    echo "alias bashc='/usr/local/bin/bashc'" >> /root/.bashrc
+
+RUN  echo 'figlet WELCOME - TO' >> /root/.bashrc && echo 'echo' >> /root/.bashrc && echo 'figlet DOCKER  - TOOLS' >> /root/.bashrc
 
 COPY --from=alcapone1933/shoutrrr:latest /usr/local/bin/shoutrrr /usr/local/bin/shoutrrr
 COPY --from=alcapone1933/ctop:latest /ctop /usr/local/bin/ctop
