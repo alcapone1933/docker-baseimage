@@ -9,7 +9,7 @@ WORKDIR /root
 
 RUN apk add --update --no-cache bash sudo byobu tini tzdata curl wget tar git tig nano bind-tools gnupg jq python3 py3-pip \
     netcat-openbsd iputils nmap net-tools openssh-client openssl iperf iproute2 procps vnstat mtr tcptraceroute tcpdump make figlet \
-    docker ca-certificates libc6-compat hstr ncurses bash-completion && \
+    docker ca-certificates libc6-compat hstr ncurses bash-completion dumb-init && \
     git clone --depth=1 https://github.com/Bash-it/bash-it.git /root/.bash_it && /root/.bash_it/install.sh --silent && \
     rm -rf /var/cache/apk/* && \
     ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
