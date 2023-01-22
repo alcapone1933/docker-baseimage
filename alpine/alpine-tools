@@ -64,6 +64,7 @@ RUN  echo 'figlet WELCOME - TO' >> /root/.bashrc && echo 'echo' >> /root/.bashrc
 COPY --from=alcapone1933/shoutrrr:latest /usr/local/bin/shoutrrr /usr/local/bin/shoutrrr
 COPY --from=alcapone1933/ctop:latest /ctop /usr/local/bin/ctop
 COPY --from=alcapone1933/bashc:latest /usr/local/bin/bashc /usr/local/bin/bashc
+COPY --from=mplatform/manifest-tool /manifest-tool /usr/local/bin/manifest-tool
 
 ENTRYPOINT ["/sbin/tini", "--"]
 CMD ["/bin/bash"]
