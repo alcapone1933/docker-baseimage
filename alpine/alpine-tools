@@ -30,8 +30,8 @@ RUN apkArch="$(apk --print-arch)" && \
             ;; \
     esac && \
     cd /tmp && \
-    curl -sSL https://install.speedtest.net/app/cli/ookla-speedtest-${SPEEDTEST_VERSION}-linux-${_arch}.tgz | tar xvz && \
-    mv /tmp/speedtest /usr/local/bin/ && rm -rf /tmp/speedtest.*
+    curl -sSL "https://install.speedtest.net/app/cli/ookla-speedtest-${SPEEDTEST_VERSION}-linux-${_arch}.tgz" | tar xvz speedtest && \
+    mv /tmp/speedtest /usr/local/bin/speedtest && rm -rf /tmp/speedtest*
 
 RUN COMPOSE_VERSION=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep 'tag_name' | cut -d\" -f4) && \
     apkArch="$(apk --print-arch)" && \
@@ -56,15 +56,37 @@ RUN COMPOSE_VERSION=$(curl -s https://api.github.com/repos/docker/compose/releas
     sed -i "s/export IRC_CLIENT='irssi'/# export IRC_CLIENT='irssi'/g" /root/.bashrc && \
     sed -i "s/export TODO=/# export TODO/g" /root/.bashrc && \
     sed -i "s/#export SHORT_HOSTNAME=/export SHORT_HOSTNAME=/g" /root/.bashrc && \
+    sed -i "s/ash/bash/g" /etc/passwd && \
     echo "alias speedtest-cli='/usr/local/bin/speedtest --accept-license --accept-gdpr'" >> /root/.bashrc && \
     echo "alias bashc='/usr/local/bin/bashc'" >> /root/.bashrc
 
-RUN  echo 'figlet WELCOME - TO' >> /root/.bashrc && echo 'echo' >> /root/.bashrc && echo 'figlet DOCKER  - TOOLS' >> /root/.bashrc
+# RUN COMPOSE_=$(curl -s https://api.github.com/repos/rsteube/carapace-bin/releases/latest | grep 'tag_name' | cut -d\" -f4) && \
+RUN CARAPACE_VERSION="0.20.3" && \
+    apkArch="$(apk --print-arch)" && \
+    case "$apkArch" in \
+        'x86_64') \
+            curl -sSLf https://github.com/rsteube/carapace-bin/releases/download/v${CARAPACE_VERSION}/carapace-bin_${CARAPACE_VERSION}_linux_amd64.apk -o /tmp/carapace-bin_${CARAPACE_VERSION}_linux_amd64.apk; \
+            apk add --allow-untrusted --no-network --no-cache /tmp/carapace-bin_${CARAPACE_VERSION}_linux_amd64.apk; \
+            rm -rf /tmp/carapace*; \
+            echo "source <(carapace _carapace)" >> /root/.bashrc; \
+            ;; \
+        'aarch64') \
+            curl -sSLf https://github.com/rsteube/carapace-bin/releases/download/v${CARAPACE_VERSION}/carapace-bin_${CARAPACE_VERSION}_linux_arm64.apk -o /tmp/carapace-bin_${CARAPACE_VERSION}_linux_arm64.apk; \
+            apk add --allow-untrusted --no-network --no-cache /tmp/carapace-bin_${CARAPACE_VERSION}_linux_arm64.apk; \
+            rm -rf /tmp/carapace*; \
+            echo "source <(carapace _carapace)" >> /root/.bashrc; \
+            ;; \
+        *) \
+            echo >&2 "error: unsupported 'carapace-bin' architecture ($apkArch)"; \
+            ;; \
+    esac
+
+RUN echo 'figlet WELCOME - TO' >> /root/.bashrc && echo 'echo' >> /root/.bashrc && echo 'figlet DOCKER  - TOOLS' >> /root/.bashrc
 
 COPY --from=alcapone1933/shoutrrr:latest /usr/local/bin/shoutrrr /usr/local/bin/shoutrrr
 COPY --from=alcapone1933/ctop:latest /ctop /usr/local/bin/ctop
 COPY --from=alcapone1933/bashc:latest /usr/local/bin/bashc /usr/local/bin/bashc
-COPY --from=mplatform/manifest-tool /manifest-tool /usr/local/bin/manifest-tool
+COPY --from=alcapone1933/drone:manifest-tool /manifest-tool /usr/local/bin/manifest-tool
 
 ENTRYPOINT ["/sbin/tini", "--"]
 CMD ["/bin/bash"]
