@@ -74,10 +74,10 @@ steps:
     commands:
       - sleep 5
       - echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
-      - docker buildx create --name ubuntu-20-04 --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
+      - docker buildx create --name ubuntu-20-04 --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx ls
       - docker buildx inspect ubuntu-20-04
-      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:20.04 -f ubuntu/ubuntu-20-04 .
+      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/ubuntu:20.04 -f ubuntu/ubuntu-20-04 .
       - docker buildx rm ubuntu-20-04
       - docker buildx ls
   - name: Build Multi-arch TEST UBUNTU 22.04
@@ -93,10 +93,10 @@ steps:
     commands:
       - sleep 5
       - echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
-      - docker buildx create --name ubuntu-22-04 --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
+      - docker buildx create --name ubuntu-22-04 --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx ls
       - docker buildx inspect ubuntu-22-04
-      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:22.04 -f ubuntu/ubuntu-22-04 .
+      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/ubuntu:22.04 -f ubuntu/ubuntu-22-04 .
       - docker buildx rm ubuntu-22-04
       - docker buildx ls
   - name: Build Multi-arch TEST UBUNTU LATEST
@@ -112,10 +112,10 @@ steps:
     commands:
       - sleep 5
       - echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
-      - docker buildx create --name ubuntu-latest --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
+      - docker buildx create --name ubuntu-latest --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx ls
       - docker buildx inspect ubuntu-latest
-      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:latest -f ubuntu/ubuntu-latest .
+      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/ubuntu:latest -f ubuntu/ubuntu-latest .
       - docker buildx rm ubuntu-latest
       - docker buildx ls
   - name: Build Multi-arch TEST ALPINE LATEST
@@ -253,10 +253,10 @@ steps:
     commands:
       - sleep 5
       - echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
-      - docker buildx create --name ubuntu-20-04 --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
+      - docker buildx create --name ubuntu-20-04 --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx ls
       - docker buildx inspect ubuntu-20-04
-      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:20.04 -f ubuntu/ubuntu-20-04 --push .
+      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/ubuntu:20.04 -f ubuntu/ubuntu-20-04 --push .
       - docker buildx rm ubuntu-20-04
       - docker buildx ls
   - name: Build Multi-arch UBUNTU 22.04
@@ -272,10 +272,10 @@ steps:
     commands:
       - sleep 5
       - echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
-      - docker buildx create --name ubuntu-22-04 --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
+      - docker buildx create --name ubuntu-22-04 --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx ls
       - docker buildx inspect ubuntu-22-04
-      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:22.04 -f ubuntu/ubuntu-22-04 --push .
+      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/ubuntu:22.04 -f ubuntu/ubuntu-22-04 --push .
       - docker buildx rm ubuntu-22-04
       - docker buildx ls
   - name: Build Multi-arch UBUNTU LATEST
@@ -291,10 +291,10 @@ steps:
     commands:
       - sleep 5
       - echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
-      - docker buildx create --name ubuntu-latest --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
+      - docker buildx create --name ubuntu-latest --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx ls
       - docker buildx inspect ubuntu-latest
-      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:latest -f ubuntu/ubuntu-latest --push .
+      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/ubuntu:latest -f ubuntu/ubuntu-latest --push .
       - docker buildx rm ubuntu-latest
       - docker buildx ls
   - name: Build Multi-arch ALPINE VERSION
