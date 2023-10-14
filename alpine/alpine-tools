@@ -61,7 +61,7 @@ RUN COMPOSE_VERSION=$(curl -s https://api.github.com/repos/docker/compose/releas
     echo "alias bashc='/usr/local/bin/bashc'" >> /root/.bashrc
 
 # RUN COMPOSE_=$(curl -s https://api.github.com/repos/rsteube/carapace-bin/releases/latest | grep 'tag_name' | cut -d\" -f4) && \
-RUN CARAPACE_VERSION="0.27.0" && \
+RUN CARAPACE_VERSION="0.28.0" && \
     apkArch="$(apk --print-arch)" && \
     case "$apkArch" in \
         'x86_64') \
