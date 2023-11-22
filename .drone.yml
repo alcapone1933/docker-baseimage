@@ -2,6 +2,7 @@
 kind: pipeline
 type: docker
 name: BUILD-TEST
+
 steps:
   - name: Build DEBIAN Buster
     image: alcapone1933/drone:docker-buildx
@@ -20,6 +21,15 @@ steps:
       platforms: linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x
       repo: alcapone1933/debian
       tags: bullseye
+      dry_run: true
+  - name: Build DEBIAN Bookworm
+    image: alcapone1933/drone:docker-buildx
+    privileged: true
+    settings:
+      dockerfile: debian/debian-bookworm
+      platforms: linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x
+      repo: alcapone1933/debian
+      tags: bookworm
       dry_run: true
   - name: Build DEBIAN LATEST
     image: alcapone1933/drone:docker-buildx
@@ -66,7 +76,7 @@ steps:
       repo: alcapone1933/alpine
       # tags: latest
       auto_tag: true
-      auto_tag_suffix: v3.16
+      auto_tag_suffix: v3.18
       dry_run: true
   - name: Build ALPINE LATEST
     image: alcapone1933/drone:docker-buildx
@@ -118,6 +128,18 @@ steps:
       platforms: linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x
       repo: alcapone1933/debian
       tags: bullseye
+  - name: Build DEBIAN Bookworm
+    image: alcapone1933/drone:docker-buildx
+    privileged: true
+    settings:
+      username: 
+        from_secret: DOCKER_USER
+      password:
+        from_secret: DOCKER_PASS
+      dockerfile: debian/debian-bookworm
+      platforms: linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x
+      repo: alcapone1933/debian
+      tags: bookworm
   - name: Build DEBIAN LATEST
     image: alcapone1933/drone:docker-buildx
     privileged: true
@@ -179,7 +201,7 @@ steps:
       repo: alcapone1933/alpine
       # tags: latest
       auto_tag: true
-      auto_tag_suffix: v3.17
+      auto_tag_suffix: v3.18
   - name: Build ALPINE LATEST
     image: alcapone1933/drone:docker-buildx
     privileged: true
