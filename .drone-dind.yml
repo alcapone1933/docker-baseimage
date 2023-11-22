@@ -42,6 +42,25 @@ steps:
       - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x -t alcapone1933/debian:bullseye -f debian/debian-bullseye .
       - docker buildx rm debian-bullseye
       - docker buildx ls
+  - name: Build Multi-arch TEST DEBIAN Bookworm
+    image: alcapone1933/docker-dind:latest
+    volumes:
+      - name: dockersock
+        path: /var/run
+    environment:
+      DOCKER_USER:
+        from_secret: DOCKER_USER
+      DOCKER_PASS:
+        from_secret: DOCKER_PASS
+    commands:
+      - sleep 5
+      - echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
+      - docker buildx create --name debian-bookworm --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
+      - docker buildx ls
+      - docker buildx inspect debian-bookworm
+      - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x -t alcapone1933/debian:bullseye -f debian/debian-bookworm .
+      - docker buildx rm debian-bookworm
+      - docker buildx ls
   - name: Build Multi-arch TEST DEBIAN LATEST
     image: alcapone1933/docker-dind:latest
     volumes:
@@ -220,6 +239,25 @@ steps:
       - docker buildx inspect debian-bullseye
       - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x -t alcapone1933/debian:bullseye -f debian/debian-bullseye --push .
       - docker buildx rm debian-bullseye
+      - docker buildx ls
+  - name: Build Multi-arch DEBIAN Bookworm
+    image: alcapone1933/docker-dind:latest
+    volumes:
+      - name: dockersock
+        path: /var/run
+    environment:
+      DOCKER_USER:
+        from_secret: DOCKER_USER
+      DOCKER_PASS:
+        from_secret: DOCKER_PASS
+    commands:
+      - sleep 5
+      - echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
+      - docker buildx create --name debian-bookworm --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
+      - docker buildx ls
+      - docker buildx inspect debian-bookworm
+      - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x -t alcapone1933/debian:bullseye -f debian/debian-bookworm --push .
+      - docker buildx rm debian-bookworm
       - docker buildx ls
   - name: Build Multi-arch DEBIAN LATEST
     image: alcapone1933/docker-dind:latest
