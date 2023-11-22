@@ -256,7 +256,7 @@ steps:
       - docker buildx create --name debian-bookworm --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x --driver-opt network=host,image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx ls
       - docker buildx inspect debian-bookworm
-      - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x -t alcapone1933/debian:bullseye -f debian/debian-bookworm --push .
+      - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x -t alcapone1933/debian:bookworm -f debian/debian-bookworm --push .
       - docker buildx rm debian-bookworm
       - docker buildx ls
   - name: Build Multi-arch DEBIAN LATEST
