@@ -60,18 +60,18 @@ RUN COMPOSE_VERSION=$(curl -s https://api.github.com/repos/docker/compose/releas
     echo "alias speedtest-cli='/usr/local/bin/speedtest --accept-license --accept-gdpr'" >> /root/.bashrc && \
     echo "alias bashc='/usr/local/bin/bashc'" >> /root/.bashrc
 
-# RUN COMPOSE_=$(curl -s https://api.github.com/repos/rsteube/carapace-bin/releases/latest | grep 'tag_name' | cut -d\" -f4) && \
-RUN CARAPACE_VERSION="0.30.2" && \
+# RUN COMPOSE_=$(curl -s https://api.github.com/repos/carapace-sh/carapace-bin/releases/latest | grep 'tag_name' | cut -d\" -f4) && \
+RUN CARAPACE_VERSION="1.0.0" && \
     apkArch="$(apk --print-arch)" && \
     case "$apkArch" in \
         'x86_64') \
-            curl -sSLf https://github.com/rsteube/carapace-bin/releases/download/v${CARAPACE_VERSION}/carapace-bin_${CARAPACE_VERSION}_linux_amd64.apk -o /tmp/carapace-bin_${CARAPACE_VERSION}_linux_amd64.apk; \
+            curl -sSLf https://github.com/carapace-sh/carapace-bin/releases/download/v${CARAPACE_VERSION}/carapace-bin_${CARAPACE_VERSION}_linux_amd64.apk -o /tmp/carapace-bin_${CARAPACE_VERSION}_linux_amd64.apk; \
             apk add --allow-untrusted --no-network --no-cache /tmp/carapace-bin_${CARAPACE_VERSION}_linux_amd64.apk; \
             rm -rf /tmp/carapace*; \
             echo "source <(carapace _carapace)" >> /root/.bashrc; \
             ;; \
         'aarch64') \
-            curl -sSLf https://github.com/rsteube/carapace-bin/releases/download/v${CARAPACE_VERSION}/carapace-bin_${CARAPACE_VERSION}_linux_arm64.apk -o /tmp/carapace-bin_${CARAPACE_VERSION}_linux_arm64.apk; \
+            curl -sSLf https://github.com/carapace-sh/carapace-bin/releases/download/v${CARAPACE_VERSION}/carapace-bin_${CARAPACE_VERSION}_linux_arm64.apk -o /tmp/carapace-bin_${CARAPACE_VERSION}_linux_arm64.apk; \
             apk add --allow-untrusted --no-network --no-cache /tmp/carapace-bin_${CARAPACE_VERSION}_linux_arm64.apk; \
             rm -rf /tmp/carapace*; \
             echo "source <(carapace _carapace)" >> /root/.bashrc; \
