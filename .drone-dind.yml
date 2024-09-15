@@ -136,7 +136,7 @@ steps:
         path: /var/run
     commands:
       - docker buildx use ubuntu-24-04
-      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:24.04 -f ubuntu/ubuntu-24-04 .
+      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:24.04 -f ubuntu/ubuntu-24-04 --push .
       - docker buildx rm ubuntu-22-04
   - name: Build_Multi-arch_UBUNTU_LATEST
     image: alcapone1933/docker-dind:latest
