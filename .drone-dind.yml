@@ -95,6 +95,18 @@ steps:
       - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:latest --cache-from=type=local,src=/cache/ubuntu-latest --cache-to=type=local,dest=/cache/ubuntu-latest -f ubuntu/ubuntu-latest .
       - docker buildx rm ubuntu-latest
 
+  - name: Build_Multi-arch_TEST_ALPINE_VERSION
+    image: alcapone1933/docker-dind:latest
+    volumes:
+      - name: dockersock
+        path: /var/run
+      - name: cache
+        path: /cache
+    commands:
+      - docker buildx create --name alpine-v3.20 --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
+      - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/alpine:v3.20 --cache-from=type=local,src=/cache/alpine-v3.20 --cache-to=type=local,dest=/cache/alpine-v3.20 -f alpine/alpine-latest .
+      - docker buildx rm alpine-v3.20
+
   - name: Build_Multi-arch_TEST_ALPINE_LATEST
     image: alcapone1933/docker-dind:latest
     volumes:
@@ -116,7 +128,7 @@ steps:
         path: /cache
     commands:
       - docker buildx create --name alpine-tools --platform linux/amd64,linux/arm/v7,linux/arm64/v8 --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
-      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8 -talcapone1933/alpine:tools --cache-from=type=local,src=/cache/alpine-tools --cache-to=type=local,dest=/cache/alpine-tools -f alpine/alpine-tools .
+      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8 -t alcapone1933/alpine:tools --cache-from=type=local,src=/cache/alpine-tools --cache-to=type=local,dest=/cache/alpine-tools -f alpine/alpine-tools .
       - docker buildx rm alpine-tools
 
 ################################
@@ -209,7 +221,7 @@ steps:
         path: /cache
     commands:
       - docker buildx create --name alpine-v3.20 --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
-      - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/alpine:v3.20 --cache-from=type=local,src=/cache/alpine-v3.20 --cache-to=type=local,dest=/cache/alpine-v3.20 -f alpine/alpine-v3.20 --push .
+      - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/alpine:v3.20 --cache-from=type=local,src=/cache/alpine-v3.20 --cache-to=type=local,dest=/cache/alpine-v3.20 -f alpine/alpine-latest --push .
       - docker buildx rm alpine-v3.20
 
   - name: Build_Multi-arch_ALPINE_LATEST
@@ -259,4 +271,3 @@ trigger:
   # - push
   # - pull_request
   - custom
-
