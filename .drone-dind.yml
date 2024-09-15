@@ -4,6 +4,7 @@ type: docker
 name: BUILD
 
 steps:
+  - name: Build_Multi-arch_TEST_DEBIAN_Bullseye
     image: alcapone1933/docker-dind:latest
     volumes:
       - name: dockersock
@@ -18,7 +19,7 @@ steps:
       - echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
       - docker buildx create --name debian-bullseye --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x -t alcapone1933/debian:bullseye -f debian/debian-bullseye .
-  - name: Build Multi-arch TEST DEBIAN Bookworm
+  - name: Build_Multi-arch_TEST_DEBIAN_Bookworm
     image: alcapone1933/docker-dind:latest
     volumes:
       - name: dockersock
@@ -26,7 +27,7 @@ steps:
     commands:
       - docker buildx create --name debian-bookworm --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x -t alcapone1933/debian:bullseye -f debian/debian-bookworm .
-  - name: Build Multi-arch TEST DEBIAN LATEST
+  - name: Build_Multi-arch_TEST_DEBIAN_LATEST
     image: alcapone1933/docker-dind:latest
     volumes:
       - name: dockersock
@@ -34,7 +35,7 @@ steps:
     commands:
       - docker buildx create --name debian-latest --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x -t alcapone1933/debian:latest -f debian/debian-latest .
-  - name: Build Multi-arch TEST UBUNTU 20.04
+  - name: Build_Multi-arch_TEST_UBUNTU_20.04
     image: alcapone1933/docker-dind:latest
     volumes:
       - name: dockersock
@@ -42,7 +43,7 @@ steps:
     commands:
       - docker buildx create --name ubuntu-20-04 --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/ubuntu:20.04 -f ubuntu/ubuntu-20-04 .
-  - name: Build Multi-arch TEST UBUNTU 22.04
+  - name: Build_Multi-arch_TEST_UBUNTU_22.04
     image: alcapone1933/docker-dind:latest
     volumes:
       - name: dockersock
@@ -50,7 +51,7 @@ steps:
     commands:
       - docker buildx create --name ubuntu-22-04 --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/ubuntu:22.04 -f ubuntu/ubuntu-22-04 .
-  - name: Build Multi-arch TEST UBUNTU 24.04
+  - name: Build_Multi-arch_TEST_UBUNTU_24.04
     image: alcapone1933/docker-dind:latest
     volumes:
       - name: dockersock
@@ -58,7 +59,7 @@ steps:
     commands:
       - docker buildx create --name ubuntu-24-04 --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/ubuntu:24.04 -f ubuntu/ubuntu-24-04 .
-  - name: Build Multi-arch TEST UBUNTU LATEST
+  - name: Build_Multi-arch_TEST_UBUNTU_LATEST
     image: alcapone1933/docker-dind:latest
     volumes:
       - name: dockersock
@@ -66,7 +67,7 @@ steps:
     commands:
       - docker buildx create --name ubuntu-latest --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/ubuntu:latest -f ubuntu/ubuntu-latest .
-  - name: Build Multi-arch TEST ALPINE LATEST
+  - name: Build_Multi-arch_TEST_ALPINE_LATEST
     image: alcapone1933/docker-dind:latest
     volumes:
       - name: dockersock
@@ -74,7 +75,7 @@ steps:
     commands:
       - docker buildx create --name alpine-latest --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/alpine:latest -f alpine/alpine-latest .
-  - name: Build Multi-arch TEST ALPINE TOOLS
+  - name: Build_Multi-arch_TEST_ALPINE_TOOLS
     image: alcapone1933/docker-dind:latest
     volumes:
       - name: dockersock
@@ -83,7 +84,7 @@ steps:
       - docker buildx create --name alpine-tools --platform linux/amd64,linux/arm/v7,linux/arm64/v8 --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8 -t alcapone1933/alpine:tools -f alpine/alpine-tools .
 ################################
-  - name: Build Multi-arch DEBIAN Bullseye
+  - name: Build_Multi-arch_DEBIAN_Bullseye
     image: alcapone1933/docker-dind:latest
     volumes:
       - name: dockersock
@@ -92,7 +93,7 @@ steps:
       - docker buildx use debian-bullseye
       - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x -t alcapone1933/debian:bullseye -f debian/debian-bullseye --push .
       - docker buildx rm debian-bullseye
-  - name: Build Multi-arch DEBIAN Bookworm
+  - name: Build_Multi-arch_DEBIAN_Bookworm
     image: alcapone1933/docker-dind:latest
     volumes:
       - name: dockersock
@@ -101,7 +102,7 @@ steps:
       - docker buildx use debian-bookworm
       - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x -t alcapone1933/debian:bookworm -f debian/debian-bookworm --push .
       - docker buildx rm debian-bookworm
-  - name: Build Multi-arch DEBIAN LATEST
+  - name: Build_Multi-arch_DEBIAN_LATEST
     image: alcapone1933/docker-dind:latest
     volumes:
       - name: dockersock
@@ -110,7 +111,7 @@ steps:
       - docker buildx use debian-latest
       - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x -t alcapone1933/debian:latest -f debian/debian-latest --push .
       - docker buildx rm debian-latest
-  - name: Build Multi-arch UBUNTU 20.04
+  - name: Build_Multi-arch_UBUNTU_20.04
     image: alcapone1933/docker-dind:latest
     volumes:
       - name: dockersock
@@ -119,7 +120,7 @@ steps:
       - docker buildx use ubuntu-20-04
       - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:20.04 -f ubuntu/ubuntu-20-04 --push .
       - docker buildx rm ubuntu-20-04
-  - name: Build Multi-arch UBUNTU 22.04
+  - name: Build_Multi-arch_UBUNTU_22.04
     image: alcapone1933/docker-dind:latest
     volumes:
       - name: dockersock
@@ -128,7 +129,7 @@ steps:
       - docker buildx use ubuntu-22-04
       - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:22.04 -f ubuntu/ubuntu-22-04 --push .
       - docker buildx rm ubuntu-22-04
-  - name: Build Multi-arch UBUNTU 24.04
+  - name: Build_Multi-arch_UBUNTU_24.04
     image: alcapone1933/docker-dind:latest
     volumes:
       - name: dockersock
@@ -137,7 +138,7 @@ steps:
       - docker buildx use ubuntu-24-04
       - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:24.04 -f ubuntu/ubuntu-24-04 .
       - docker buildx rm ubuntu-22-04
-  - name: Build Multi-arch UBUNTU LATEST
+  - name: Build_Multi-arch_UBUNTU_LATEST
     image: alcapone1933/docker-dind:latest
     volumes:
       - name: dockersock
@@ -146,7 +147,7 @@ steps:
       - docker buildx use ubuntu-latest
       - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:latest -f ubuntu/ubuntu-latest --push .
       - docker buildx rm ubuntu-latest
-  - name: Build Multi-arch ALPINE VERSION
+  - name: Build_Multi-arch_ALPINE_VERSION
     image: alcapone1933/docker-dind:latest
     volumes:
       - name: dockersock
@@ -155,7 +156,7 @@ steps:
       - docker buildx use alpine-v3.20
       - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/alpine:v3.20 -f alpine/alpine-latest --push .
       - docker buildx rm alpine-v3.20
-  - name: Build Multi-arch ALPINE LATEST
+  - name: Build_Multi-arch_ALPINE_LATEST
     image: alcapone1933/docker-dind:latest
     volumes:
       - name: dockersock
@@ -164,7 +165,7 @@ steps:
       - docker buildx use alpine-latest
       - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/alpine:latest -f alpine/alpine-latest --push .
       - docker buildx rm alpine-latest
-  - name: Build Multi-arch ALPINE TOOLS
+  - name: Build_Multi-arch_ALPINE_TOOLS
     image: alcapone1933/docker-dind:latest
     volumes:
       - name: dockersock
@@ -193,3 +194,4 @@ trigger:
   # - push
   # - pull_request
   - custom
+
