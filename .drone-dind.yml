@@ -9,8 +9,6 @@ steps:
     volumes:
       - name: dockersock
         path: /var/run
-      - name: cache
-        path: /cache
     environment:
       DOCKER_USER:
         from_secret: DOCKER_USER
@@ -19,236 +17,166 @@ steps:
     commands:
       - sleep 15
       - echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
-      #- docker buildx create --name debian-bullseye --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
-      #- docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/debian:bullseye --cache-to=type=local,dest=/cache/debian-bullseye -f debian/debian-bullseye .
-      #- docker buildx rm debian-bullseye
-      - docker volume create build_cache
-      - docker buildx create --name debian-bullseye --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use --cache-import=type=local,src=/cache --cache-export=type=local,dest=/cache
-      - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x --tag alcapone1933/debian:bullseye --push -f debian/debian-bullseye .
-      - docker buildx rm debian-bullseye
+      - docker buildx create --name debian-bullseye --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
+      # - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/debian:bullseye -f debian/debian-bullseye .
+      - sleep 2
   - name: Build_Multi-arch_TEST_DEBIAN_Bookworm
     image: alcapone1933/docker-dind:latest
     volumes:
       - name: dockersock
         path: /var/run
-      - name: cache
-        path: /cache
     commands:
+      - docker buildx ls
       - docker buildx create --name debian-bookworm --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
-      - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x -t alcapone1933/debian:bookworm --cache-from=type=local,src=/cache/debian-bookworm --cache-to=type=local,dest=/cache/debian-bookworm -f debian/debian-bookworm .
-      - docker buildx rm debian-bookworm
-
+      - docker buildx ls
+      - sleep 600
+      - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x -t alcapone1933/debian:bullseye -f debian/debian-bookworm .
   - name: Build_Multi-arch_TEST_DEBIAN_LATEST
     image: alcapone1933/docker-dind:latest
     volumes:
       - name: dockersock
         path: /var/run
-      - name: cache
-        path: /cache
     commands:
       - docker buildx create --name debian-latest --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
-      - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x -t alcapone1933/debian:latest --cache-from=type=local,src=/cache/debian-latest --cache-to=type=local,dest=/cache/debian-latest -f debian/debian-latest .
-      - docker buildx rm debian-latest
-
+      - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x -t alcapone1933/debian:latest -f debian/debian-latest .
   - name: Build_Multi-arch_TEST_UBUNTU_20.04
     image: alcapone1933/docker-dind:latest
     volumes:
       - name: dockersock
         path: /var/run
-      - name: cache
-        path: /cache
     commands:
       - docker buildx create --name ubuntu-20-04 --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
-      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:20.04 --cache-from=type=local,src=/cache/ubuntu-20-04 --cache-to=type=local,dest=/cache/ubuntu-20-04 -f ubuntu/ubuntu-20-04 .
-      - docker buildx rm ubuntu-20-04
-
+      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:20.04 -f ubuntu/ubuntu-20-04 .
   - name: Build_Multi-arch_TEST_UBUNTU_22.04
     image: alcapone1933/docker-dind:latest
     volumes:
       - name: dockersock
         path: /var/run
-      - name: cache
-        path: /cache
     commands:
       - docker buildx create --name ubuntu-22-04 --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
-      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:22.04 --cache-from=type=local,src=/cache/ubuntu-22-04 --cache-to=type=local,dest=/cache/ubuntu-22-04 -f ubuntu/ubuntu-22-04 .
-      - docker buildx rm ubuntu-22-04
-
+      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:22.04 -f ubuntu/ubuntu-22-04 .
   - name: Build_Multi-arch_TEST_UBUNTU_24.04
     image: alcapone1933/docker-dind:latest
     volumes:
       - name: dockersock
         path: /var/run
-      - name: cache
-        path: /cache
     commands:
       - docker buildx create --name ubuntu-24-04 --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
-      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:24.04 --cache-from=type=local,src=/cache/ubuntu-24-04 --cache-to=type=local,dest=/cache/ubuntu-24-04 -f ubuntu/ubuntu-24-04 .
-      - docker buildx rm ubuntu-24-04
-
+      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:24.04 -f ubuntu/ubuntu-24-04 .
   - name: Build_Multi-arch_TEST_UBUNTU_LATEST
     image: alcapone1933/docker-dind:latest
     volumes:
       - name: dockersock
         path: /var/run
-      - name: cache
-        path: /cache
     commands:
       - docker buildx create --name ubuntu-latest --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
-      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:latest --cache-from=type=local,src=/cache/ubuntu-latest --cache-to=type=local,dest=/cache/ubuntu-latest -f ubuntu/ubuntu-latest .
-      - docker buildx rm ubuntu-latest
-
-  - name: Build_Multi-arch_TEST_ALPINE_VERSION
-    image: alcapone1933/docker-dind:latest
-    volumes:
-      - name: dockersock
-        path: /var/run
-      - name: cache
-        path: /cache
-    commands:
-      - docker buildx create --name alpine-v3.20 --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
-      - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/alpine:v3.20 --cache-from=type=local,src=/cache/alpine-v3.20 --cache-to=type=local,dest=/cache/alpine-v3.20 -f alpine/alpine-latest .
-      - docker buildx rm alpine-v3.20
-
+      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:latest -f ubuntu/ubuntu-latest .
   - name: Build_Multi-arch_TEST_ALPINE_LATEST
     image: alcapone1933/docker-dind:latest
     volumes:
       - name: dockersock
         path: /var/run
-      - name: cache
-        path: /cache
     commands:
       - docker buildx create --name alpine-latest --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
-      - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/alpine:latest --cache-from=type=local,src=/cache/alpine-latest --cache-to=type=local,dest=/cache/alpine-latest -f alpine/alpine-latest .
-      - docker buildx rm alpine-latest
-
+      - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/alpine:latest -f alpine/alpine-latest .
   - name: Build_Multi-arch_TEST_ALPINE_TOOLS
     image: alcapone1933/docker-dind:latest
     volumes:
       - name: dockersock
         path: /var/run
-      - name: cache
-        path: /cache
     commands:
       - docker buildx create --name alpine-tools --platform linux/amd64,linux/arm/v7,linux/arm64/v8 --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
-      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8 -t alcapone1933/alpine:tools --cache-from=type=local,src=/cache/alpine-tools --cache-to=type=local,dest=/cache/alpine-tools -f alpine/alpine-tools .
-      - docker buildx rm alpine-tools
-
+      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8 -t alcapone1933/alpine:tools -f alpine/alpine-tools .
 ################################
   - name: Build_Multi-arch_DEBIAN_Bullseye
     image: alcapone1933/docker-dind:latest
     volumes:
       - name: dockersock
         path: /var/run
-      - name: cache
-        path: /cache
     commands:
-      - docker buildx create --name debian-bullseye --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
-      - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/debian:bullseye --cache-from=type=local,src=/cache/debian-bullseye --cache-to=type=local,dest=/cache/debian-bullseye -f debian/debian-bullseye --push .
+      - docker buildx use debian-bullseye
+      - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/debian:bullseye -f debian/debian-bullseye --push .
       - docker buildx rm debian-bullseye
-
   - name: Build_Multi-arch_DEBIAN_Bookworm
     image: alcapone1933/docker-dind:latest
     volumes:
       - name: dockersock
         path: /var/run
-      - name: cache
-        path: /cache
     commands:
-      - docker buildx create --name debian-bookworm --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
-      - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x -t alcapone1933/debian:bookworm --cache-from=type=local,src=/cache/debian-bookworm --cache-to=type=local,dest=/cache/debian-bookworm --push -f debian/debian-bookworm --push .
+      - docker buildx use debian-bookworm
+      - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x -t alcapone1933/debian:bookworm -f debian/debian-bookworm --push .
       - docker buildx rm debian-bookworm
   - name: Build_Multi-arch_DEBIAN_LATEST
     image: alcapone1933/docker-dind:latest
     volumes:
       - name: dockersock
         path: /var/run
-      - name: cache
-        path: /cache
     commands:
-      - docker buildx create --name debian-latest --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
-      - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x -t alcapone1933/debian:latest --cache-from=type=local,src=/cache/debian-latest --cache-to=type=local,dest=/cache/debian-latest -f debian/debian-latest --push .
+      - docker buildx use debian-latest
+      - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x -t alcapone1933/debian:latest -f debian/debian-latest --push .
       - docker buildx rm debian-latest
   - name: Build_Multi-arch_UBUNTU_20.04
     image: alcapone1933/docker-dind:latest
     volumes:
       - name: dockersock
         path: /var/run
-      - name: cache
-        path: /cache
     commands:
-      - docker buildx create --name ubuntu-20-04 --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
-      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:20.04 --cache-from=type=local,src=/cache/ubuntu-20-04 --cache-to=type=local,dest=/cache/ubuntu-20-04 -f ubuntu/ubuntu-20-04 --push .
+      - docker buildx use ubuntu-20-04
+      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:20.04 -f ubuntu/ubuntu-20-04 --push .
       - docker buildx rm ubuntu-20-04
   - name: Build_Multi-arch_UBUNTU_22.04
     image: alcapone1933/docker-dind:latest
     volumes:
       - name: dockersock
         path: /var/run
-      - name: cache
-        path: /cache
     commands:
-      - docker buildx create --name ubuntu-22-04 --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
-      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:22.04 --cache-from=type=local,src=/cache/ubuntu-22-04 --cache-to=type=local,dest=/cache/ubuntu-22-04 -f ubuntu/ubuntu-22-04 --push .
+      - docker buildx use ubuntu-22-04
+      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:22.04 -f ubuntu/ubuntu-22-04 --push .
       - docker buildx rm ubuntu-22-04
   - name: Build_Multi-arch_UBUNTU_24.04
     image: alcapone1933/docker-dind:latest
     volumes:
       - name: dockersock
         path: /var/run
-      - name: cache
-        path: /cache
     commands:
-      - docker buildx create --name ubuntu-24-04 --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
-      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t  alcapone1933/ubuntu:24.04 --cache-from=type=local,src=/cache/ubuntu-24-04 --cache-to=type=local,dest=/cache/ubuntu-24-04 -f ubuntu/ubuntu-24-04 --push .
-      - docker buildx rm ubuntu-24-04
-
+      - docker buildx use ubuntu-24-04
+      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:24.04 -f ubuntu/ubuntu-24-04 --push .
+      - docker buildx rm ubuntu-22-04
   - name: Build_Multi-arch_UBUNTU_LATEST
     image: alcapone1933/docker-dind:latest
     volumes:
       - name: dockersock
         path: /var/run
-      - name: cache
-        path: /cache
     commands:
-      - docker buildx create --name ubuntu-latest --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
-      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t  alcapone1933/ubuntu:latest --cache-from=type=local,src=/cache/ubuntu-latest --cache-to=type=local,dest=/cache/ubuntu-latest -f ubuntu/ubuntu-latest --push .
+      - docker buildx use ubuntu-latest
+      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:latest -f ubuntu/ubuntu-latest --push .
       - docker buildx rm ubuntu-latest
-
   - name: Build_Multi-arch_ALPINE_VERSION
     image: alcapone1933/docker-dind:latest
     volumes:
       - name: dockersock
         path: /var/run
-      - name: cache
-        path: /cache
     commands:
-      - docker buildx create --name alpine-v3.20 --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
-      - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/alpine:v3.20 --cache-from=type=local,src=/cache/alpine-v3.20 --cache-to=type=local,dest=/cache/alpine-v3.20 -f alpine/alpine-latest --push .
+      - docker buildx use alpine-v3.20
+      - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/alpine:v3.20 -f alpine/alpine-latest --push .
       - docker buildx rm alpine-v3.20
-
   - name: Build_Multi-arch_ALPINE_LATEST
     image: alcapone1933/docker-dind:latest
     volumes:
       - name: dockersock
         path: /var/run
-      - name: cache
-        path: /cache
     commands:
-      - docker buildx create --name alpine-latest --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
-      - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/alpine:latest --cache-from=type=local,src=/cache/alpine-latest --cache-to=type=local,dest=/cache/alpine-latest -f alpine/alpine-latest --push .
+      - docker buildx use alpine-latest
+      - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/alpine:latest -f alpine/alpine-latest --push .
       - docker buildx rm alpine-latest
-
   - name: Build_Multi-arch_ALPINE_TOOLS
     image: alcapone1933/docker-dind:latest
     volumes:
       - name: dockersock
         path: /var/run
-      - name: cache
-        path: /cache
     commands:
-      - docker buildx create --name alpine-tools --platform linux/amd64,linux/arm/v7,linux/arm64/v8 --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
-      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8 -t alcapone1933/alpine:tools --cache-from=type=local,src=/cache/alpine-tools --cache-to=type=local,dest=/cache/alpine-tools -f alpine/alpine-tools --push .
+      - docker buildx use alpine-tools
+      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8 -t alcapone1933/alpine:tools -f alpine/alpine-tools --push .
       - docker buildx rm alpine-tools
 ################################
 services:
@@ -258,13 +186,9 @@ services:
     volumes:
       - name: dockersock
         path: /var/run
-      - name: cache
-        path: /cache
 
 volumes:
   - name: dockersock
-    temp: {}
-  - name: cache
     temp: {}
 
 trigger:
