@@ -81,8 +81,8 @@ steps:
       - name: dockersock
         path: /var/run
     commands:
-      - docker buildx create --name alpine-tools --platform linux/amd64,linux/arm/v7,linux/arm64/v8 --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
-      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8 -t alcapone1933/alpine:tools -f alpine/alpine-tools .
+      - docker buildx create --name alpine-tools --platform linux/amd64,linux/arm64/v8 --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
+      - docker buildx build --progress=plain --platform linux/amd64,linux/arm64/v8 -t alcapone1933/alpine:tools -f alpine/alpine-tools .
 ################################
   - name: Build_Multi-arch_DEBIAN_Bullseye
     image: alcapone1933/docker-dind:latest
@@ -171,8 +171,8 @@ steps:
       - name: dockersock
         path: /var/run
     commands:
-      - docker buildx create --name alpine-tools --platform linux/amd64,linux/arm/v7,linux/arm64/v8 --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
-      - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8 -t alcapone1933/alpine:tools -f alpine/alpine-tools --push .
+      - docker buildx create --name alpine-tools --platform linux/amd64,linux/arm64/v8 --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
+      - docker buildx build --progress=plain --platform linux/amd64,linux/arm64/v8 -t alcapone1933/alpine:tools -f alpine/alpine-tools --push .
       - docker buildx rm alpine-tools
 ################################
 services:
