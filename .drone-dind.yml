@@ -20,7 +20,7 @@ steps:
       - sleep 15
       - echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
       - docker buildx create --name debian-bullseye --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
-      - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/debian:bullseye --cache-from=type=local,src=/cache/debian-bullseye --cache-to=type=local,dest=/cache/debian-bullseye -f debian/debian-bullseye .
+      - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/debian:bullseye --cache-to=type=local,dest=/cache/debian-bullseye -f debian/debian-bullseye .
       - docker buildx rm debian-bullseye
 
   - name: Build_Multi-arch_TEST_DEBIAN_Bookworm
