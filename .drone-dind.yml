@@ -9,14 +9,14 @@ steps:
     volumes:
       - name: dockersock
         path: /var/run
-    environment:
-      DOCKER_USER:
+    settings:
+      DOCKER_USER: 
         from_secret: DOCKER_USER
       DOCKER_PASS:
         from_secret: DOCKER_PASS
     commands:
       - sleep 15
-      - echo $DOCKER_PASS | docker login --username $DOCKER_USER --password-stdin
+      - docker-login.sh
       - docker buildx create --name debian-bullseye --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/debian:bullseye -f debian/debian-bullseye .
   - name: Build_Multi-arch_TEST_DEBIAN_Bookworm
@@ -89,7 +89,13 @@ steps:
     volumes:
       - name: dockersock
         path: /var/run
+    settings:
+      DOCKER_USER: 
+        from_secret: DOCKER_USER
+      DOCKER_PASS:
+        from_secret: DOCKER_PASS
     commands:
+      - docker-login.sh
       - docker buildx create --name debian-bullseye --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/debian:bullseye -f debian/debian-bullseye --push .
       - docker buildx rm debian-bullseye
@@ -98,7 +104,13 @@ steps:
     volumes:
       - name: dockersock
         path: /var/run
+    settings:
+      DOCKER_USER: 
+        from_secret: DOCKER_USER
+      DOCKER_PASS:
+        from_secret: DOCKER_PASS
     commands:
+      - docker-login.sh
       - docker buildx create --name debian-bookworm --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x -t alcapone1933/debian:bookworm -f debian/debian-bookworm --push .
       - docker buildx rm debian-bookworm
@@ -107,7 +119,13 @@ steps:
     volumes:
       - name: dockersock
         path: /var/run
+    settings:
+      DOCKER_USER: 
+        from_secret: DOCKER_USER
+      DOCKER_PASS:
+        from_secret: DOCKER_PASS
     commands:
+      - docker-login.sh
       - docker buildx create --name debian-latest --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x -t alcapone1933/debian:latest -f debian/debian-latest --push .
       - docker buildx rm debian-latest
@@ -116,7 +134,13 @@ steps:
     volumes:
       - name: dockersock
         path: /var/run
+    settings:
+      DOCKER_USER: 
+        from_secret: DOCKER_USER
+      DOCKER_PASS:
+        from_secret: DOCKER_PASS
     commands:
+      - docker-login.sh
       - docker buildx create --name ubuntu-20-04 --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:20.04 -f ubuntu/ubuntu-20-04 --push .
       - docker buildx rm ubuntu-20-04
@@ -125,7 +149,13 @@ steps:
     volumes:
       - name: dockersock
         path: /var/run
+    settings:
+      DOCKER_USER: 
+        from_secret: DOCKER_USER
+      DOCKER_PASS:
+        from_secret: DOCKER_PASS
     commands:
+      - docker-login.sh
       - docker buildx create --name ubuntu-22-04 --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:22.04 -f ubuntu/ubuntu-22-04 --push .
       - docker buildx rm ubuntu-22-04
@@ -134,7 +164,13 @@ steps:
     volumes:
       - name: dockersock
         path: /var/run
+    settings:
+      DOCKER_USER: 
+        from_secret: DOCKER_USER
+      DOCKER_PASS:
+        from_secret: DOCKER_PASS
     commands:
+      - docker-login.sh
       - docker buildx create --name ubuntu-24-04 --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:24.04 -f ubuntu/ubuntu-24-04 --push .
       - docker buildx rm ubuntu-24-04
@@ -143,7 +179,13 @@ steps:
     volumes:
       - name: dockersock
         path: /var/run
+    settings:
+      DOCKER_USER: 
+        from_secret: DOCKER_USER
+      DOCKER_PASS:
+        from_secret: DOCKER_PASS
     commands:
+      - docker-login.sh
       - docker buildx create --name ubuntu-latest --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx build --progress=plain --platform linux/amd64,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/riscv64,linux/s390x -t alcapone1933/ubuntu:latest -f ubuntu/ubuntu-latest --push .
       - docker buildx rm ubuntu-latest
@@ -152,7 +194,13 @@ steps:
     volumes:
       - name: dockersock
         path: /var/run
+    settings:
+      DOCKER_USER: 
+        from_secret: DOCKER_USER
+      DOCKER_PASS:
+        from_secret: DOCKER_PASS
     commands:
+      - docker-login.sh
       - docker buildx create --name alpine-v3.20 --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/alpine:v3.20 -f alpine/alpine-latest --push .
       - docker buildx rm alpine-v3.20
@@ -161,7 +209,13 @@ steps:
     volumes:
       - name: dockersock
         path: /var/run
+    settings:
+      DOCKER_USER: 
+        from_secret: DOCKER_USER
+      DOCKER_PASS:
+        from_secret: DOCKER_PASS
     commands:
+      - docker-login.sh
       - docker buildx create --name alpine-latest --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/alpine:latest -f alpine/alpine-latest --push .
       - docker buildx rm alpine-latest
@@ -170,7 +224,13 @@ steps:
     volumes:
       - name: dockersock
         path: /var/run
+    settings:
+      DOCKER_USER: 
+        from_secret: DOCKER_USER
+      DOCKER_PASS:
+        from_secret: DOCKER_PASS
     commands:
+      - docker-login.sh
       - docker buildx create --name alpine-tools --platform linux/amd64,linux/arm64/v8 --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx build --progress=plain --platform linux/amd64,linux/arm64/v8 -t alcapone1933/alpine:tools -f alpine/alpine-tools --push .
       - docker buildx rm alpine-tools
