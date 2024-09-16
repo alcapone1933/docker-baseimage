@@ -9,8 +9,8 @@ steps:
     volumes:
       - name: dockersock
         path: /var/run
-    settings:
-      DOCKER_USER: 
+    environment:
+      DOCKER_USER:
         from_secret: DOCKER_USER
       DOCKER_PASS:
         from_secret: DOCKER_PASS
@@ -89,8 +89,8 @@ steps:
     volumes:
       - name: dockersock
         path: /var/run
-    settings:
-      DOCKER_USER: 
+    environment:
+      DOCKER_USER:
         from_secret: DOCKER_USER
       DOCKER_PASS:
         from_secret: DOCKER_PASS
@@ -104,8 +104,8 @@ steps:
     volumes:
       - name: dockersock
         path: /var/run
-    settings:
-      DOCKER_USER: 
+    environment:
+      DOCKER_USER:
         from_secret: DOCKER_USER
       DOCKER_PASS:
         from_secret: DOCKER_PASS
@@ -119,8 +119,8 @@ steps:
     volumes:
       - name: dockersock
         path: /var/run
-    settings:
-      DOCKER_USER: 
+    environment:
+      DOCKER_USER:
         from_secret: DOCKER_USER
       DOCKER_PASS:
         from_secret: DOCKER_PASS
@@ -134,8 +134,8 @@ steps:
     volumes:
       - name: dockersock
         path: /var/run
-    settings:
-      DOCKER_USER: 
+    environment:
+      DOCKER_USER:
         from_secret: DOCKER_USER
       DOCKER_PASS:
         from_secret: DOCKER_PASS
@@ -149,8 +149,8 @@ steps:
     volumes:
       - name: dockersock
         path: /var/run
-    settings:
-      DOCKER_USER: 
+    environment:
+      DOCKER_USER:
         from_secret: DOCKER_USER
       DOCKER_PASS:
         from_secret: DOCKER_PASS
@@ -164,8 +164,8 @@ steps:
     volumes:
       - name: dockersock
         path: /var/run
-    settings:
-      DOCKER_USER: 
+    environment:
+      DOCKER_USER:
         from_secret: DOCKER_USER
       DOCKER_PASS:
         from_secret: DOCKER_PASS
@@ -179,8 +179,8 @@ steps:
     volumes:
       - name: dockersock
         path: /var/run
-    settings:
-      DOCKER_USER: 
+    environment:
+      DOCKER_USER:
         from_secret: DOCKER_USER
       DOCKER_PASS:
         from_secret: DOCKER_PASS
@@ -194,8 +194,8 @@ steps:
     volumes:
       - name: dockersock
         path: /var/run
-    settings:
-      DOCKER_USER: 
+    environment:
+      DOCKER_USER:
         from_secret: DOCKER_USER
       DOCKER_PASS:
         from_secret: DOCKER_PASS
@@ -209,8 +209,8 @@ steps:
     volumes:
       - name: dockersock
         path: /var/run
-    settings:
-      DOCKER_USER: 
+    environment:
+      DOCKER_USER:
         from_secret: DOCKER_USER
       DOCKER_PASS:
         from_secret: DOCKER_PASS
@@ -224,8 +224,8 @@ steps:
     volumes:
       - name: dockersock
         path: /var/run
-    settings:
-      DOCKER_USER: 
+    environment:
+      DOCKER_USER:
         from_secret: DOCKER_USER
       DOCKER_PASS:
         from_secret: DOCKER_PASS
