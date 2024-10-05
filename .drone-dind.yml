@@ -4,22 +4,23 @@ type: docker
 name: BUILD-TEST
 
 steps:
-  - name: Build_Multi-arch_TEST_DEBIAN_Bullseye
-    image: alcapone1933/docker-dind:latest
-    volumes:
-      - name: dockersock
-        path: /var/run
-    commands:
-      - sleep 15
-      - docker buildx create --name debian-bullseye --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
-      - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/debian:bullseye -f debian/debian-bullseye .
-      - docker buildx rm debian-bullseye
+#  - name: Build_Multi-arch_TEST_DEBIAN_Bullseye
+#    image: alcapone1933/docker-dind:latest
+#    volumes:
+#      - name: dockersock
+#        path: /var/run
+#    commands:
+#      - sleep 15
+#      - docker buildx create --name debian-bullseye --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
+#      - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/debian:bullseye -f debian/debian-bullseye .
+#      - docker buildx rm debian-bullseye
   - name: Build_Multi-arch_TEST_DEBIAN_Bookworm
     image: alcapone1933/docker-dind:latest
     volumes:
       - name: dockersock
         path: /var/run
     commands:
+      - sleep 15
       - docker buildx create --name debian-bookworm --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x -t alcapone1933/debian:bullseye -f debian/debian-bookworm .
       - docker buildx rm debian-bookworm
@@ -113,22 +114,22 @@ type: docker
 name: BUILD-Dockerhub
 
 steps:
-  - name: Build_Multi-arch_DEBIAN_Bullseye
-    image: alcapone1933/docker-dind:latest
-    volumes:
-      - name: dockersock
-        path: /var/run
-    environment:
-      DOCKER_USER:
-        from_secret: DOCKER_USER
-      DOCKER_PASS:
-        from_secret: DOCKER_PASS
-    commands:
-      - sleep 15
-      - docker-login.sh
-      - docker buildx create --name debian-bullseye --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
-      - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/debian:bullseye -f debian/debian-bullseye --push .
-      - docker buildx rm debian-bullseye
+#  - name: Build_Multi-arch_DEBIAN_Bullseye
+#    image: alcapone1933/docker-dind:latest
+#    volumes:
+#      - name: dockersock
+#        path: /var/run
+#    environment:
+#      DOCKER_USER:
+#        from_secret: DOCKER_USER
+#      DOCKER_PASS:
+#        from_secret: DOCKER_PASS
+#    commands:
+#      - sleep 15
+#      - docker-login.sh
+#      - docker buildx create --name debian-bullseye --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
+#      - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/debian:bullseye -f debian/debian-bullseye --push .
+#      - docker buildx rm debian-bullseye
   - name: Build_Multi-arch_DEBIAN_Bookworm
     image: alcapone1933/docker-dind:latest
     volumes:
@@ -140,6 +141,7 @@ steps:
       DOCKER_PASS:
         from_secret: DOCKER_PASS
     commands:
+      - sleep 15      
       - docker-login.sh
       - docker buildx create --name debian-bookworm --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x --driver-opt image=alcapone1933/buildkit:latest --bootstrap --use
       - docker buildx build --progress=plain --platform linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/mips64le,linux/ppc64le,linux/s390x -t alcapone1933/debian:bookworm -f debian/debian-bookworm --push .
