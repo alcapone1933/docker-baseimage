@@ -4,7 +4,17 @@ LABEL maintainer="alcapone1933 <alcapone1933@cosanostra-cloud.de>" \
       org.opencontainers.image.created="$(date +%Y-%m-%d\ %H:%M)" \
       org.opencontainers.image.authors="alcapone1933 <alcapone1933@cosanostra-cloud.de>"
 
-ENV TZ=Europe/Berlin
+ENV TZ=Europe/Berlin \
+    LANG=de_DE.UTF-8 \
+    LANGUAGE=de_DE:de \
+    LC_ALL=de_DE.UTF-8
+
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-RUN apt-get update -y && apt-get upgrade -y && apt-get -y install curl tini dumb-init && \
-    rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get -y upgrade && \
+    apt-get -y install --no-install-recommends curl wget locales procps tini dumb-init tzdata && \
+    touch /etc/locale.gen && \
+    echo "de_DE.UTF-8 UTF-8" >> /etc/locale.gen && \
+    echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && \
+    locale-gen && \
+    apt-get -y install --reinstall ca-certificates && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
