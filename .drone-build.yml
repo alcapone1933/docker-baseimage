@@ -36,7 +36,7 @@ steps:
       - docker buildx build --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/alpine:v3.20 -f alpine/alpine-latest --push .
       - docker buildx build --platform linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x -t alcapone1933/alpine:latest -f alpine/alpine-latest --push .
       - docker buildx build --platform linux/amd64,linux/arm64/v8 -t alcapone1933/alpine:tools -f alpine/alpine-tools --push .
-      - docker buildx docker-baseimage
+      - docker buildx rm docker-baseimage
 services:
   - name: docker
     image: alcapone1933/docker-dind:latest
