@@ -1,8 +1,9 @@
 FROM debian:bullseye
 # linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
-LABEL maintainer="alcapone1933 <alcapone1933@cosanostra-cloud.de>" \
-      org.opencontainers.image.created="$(date +%Y-%m-%d\ %H:%M)" \
-      org.opencontainers.image.authors="alcapone1933 <alcapone1933@cosanostra-cloud.de>"
+ARG BUILD_DATE
+LABEL maintainer="alcapone1933 alcapone1933@cosanostra-cloud.de" \
+      org.opencontainers.image.created="$BUILD_DATE" \
+      org.opencontainers.image.authors="alcapone1933 alcapone1933@cosanostra-cloud.de"
 
 ENV TZ=Europe/Berlin \
     LANG=de_DE.UTF-8 \
