@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:3.23.3
 ARG BUILD_DATE
 LABEL maintainer="alcapone1933 alcapone1933@cosanostra-cloud.de" \
       org.opencontainers.image.created="$BUILD_DATE" \

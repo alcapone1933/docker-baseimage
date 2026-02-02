@@ -67,7 +67,7 @@ steps:
       repo: alcapone1933/alpine
       tags: 
         - latest
-        - v3.22
+        - v3.23
       dry_run: true
   - name: Build_ALPINE_TOOLS
     image: alcapone1933/drone:docker-buildx
@@ -180,7 +180,7 @@ steps:
       repo: alcapone1933/alpine
       tags:
         - latest
-        - v3.22
+        - v3.23
   - name: Build_ALPINE_TOOLS
     image: alcapone1933/drone:docker-buildx
     privileged: true
