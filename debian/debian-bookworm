@@ -7,8 +7,8 @@ LABEL maintainer="alcapone1933 alcapone1933@cosanostra-cloud.de" \
 
 ENV TZ=Europe/Berlin \
     LANG=de_DE.UTF-8 \
-    LANGUAGE=de_DE:de \
-    LC_ALL=de_DE.UTF-8
+    LANGUAGE=de_DE:en
+    # LC_ALL=de_DE.UTF-8
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN echo "deb http://deb.debian.org/debian bookworm contrib non-free non-free-firmware" >> /etc/apt/sources.list && \

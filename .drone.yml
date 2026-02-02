@@ -20,7 +20,9 @@ steps:
       dockerfile: debian/debian-latest
       platforms: linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x,linux/riscv64
       repo: alcapone1933/debian
-      tags: latest
+      tags:
+        - latest
+        - trixie
       dry_run: true
   - name: Build_UBUNTU_20.04
     image: alcapone1933/drone:docker-buildx
@@ -63,7 +65,7 @@ steps:
     privileged: true
     settings:
       dockerfile: alpine/alpine-latest
-      platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
+      platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x,linux/riscv64
       repo: alcapone1933/alpine
       tags: 
         - latest
@@ -118,7 +120,9 @@ steps:
       dockerfile: debian/debian-latest
       platforms: linux/386,linux/amd64,linux/arm/v5,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x,linux/riscv64
       repo: alcapone1933/debian
-      tags: latest
+      tags:
+        - latest
+        - trixie
   - name: Build_UBUNTU_20.04
     image: alcapone1933/drone:docker-buildx
     privileged: true
@@ -176,7 +180,7 @@ steps:
       password:
         from_secret: DOCKER_PASS
       dockerfile: alpine/alpine-latest
-      platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x
+      platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64/v8,linux/ppc64le,linux/s390x,linux/riscv64
       repo: alcapone1933/alpine
       tags:
         - latest
